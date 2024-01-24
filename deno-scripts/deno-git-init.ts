@@ -27,6 +27,7 @@ if (files.length > 0) {
 }
 
 cmd = new Deno.Command("deno", { args: ["init"] });
+await cmd.output();
 // const { stdout: denoOutput } = await cmd.output();
 // console.log(denoOutput, "denoOutput");
 // deno output is empty

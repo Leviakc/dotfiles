@@ -74,5 +74,5 @@ alias nl="NVIM_APPNAME=nvimLazy nvim"
 
 # scripts
 alias denoserver="~/.config/nvim/deno-node-server.ts"
-alias deno-git-init="$HOME/dotflies/deno-ts-scripts/deno-git-init.ts"
+alias deno-git-init="$HOME/dotfiles/deno-scripts/deno-git-init.ts"
 
