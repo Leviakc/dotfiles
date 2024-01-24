@@ -10,9 +10,12 @@ if (!gitDir) {
   const gitCmd = new Deno.Command("git", { args: ["init"] });
   const { stdout } = await gitCmd.output();
   await Deno.stdout.write(stdout);
+  // Creates .gitignore file
+  new Deno.Command("touch", { args: [".gitignore"] });
 } else {
   console.log("Git repo already exists");
 }
+
 
 // Start deno project if not already started
 
