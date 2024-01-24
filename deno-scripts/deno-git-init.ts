@@ -62,3 +62,6 @@ const denoConfig = `{
 }`;
 
 Deno.writeTextFileSync("deno.json", denoConfig);
+
+// Readme file created
+cmd = new Deno.Command("touch", { args: ["README.md"] });
