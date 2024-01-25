@@ -16,7 +16,6 @@ if (!gitDir) {
   console.log("Git repo already exists");
 }
 
-
 // Start deno project if not already started
 
 const files = [];
@@ -29,12 +28,23 @@ if (files.length > 0) {
   Deno.exit();
 }
 
+console.log("\n");
 cmd = new Deno.Command("deno", { args: ["init"] });
-await cmd.output();
-// const { stdout: denoOutput } = await cmd.output();
-// console.log(denoOutput, "denoOutput");
-// deno output is empty
-console.log("\nDeno project initialized");
+const { stdout: denoOutput, stderr } = await cmd.output();
+
+denoOutput.length > 0
+  ? await Deno.stdout.write(denoOutput)
+  : await Deno.stdout.write(stderr);
+
+// Second way to run deno init
+// const command = new Deno.Command(Deno.execPath(), {
+//   args: ["init"],
+//   stdin: "piped",
+//   stdout: "piped",
+// });
+// const child = command.spawn();
+// child.stdout.pipeTo(await Deno.stdout.writable);
+// child.stdin.close();
 
 const denoConfig = `{
   "imports": {
@@ -67,4 +77,11 @@ const denoConfig = `{
 Deno.writeTextFileSync("deno.json", denoConfig);
 
 // Readme file created
+const readmeOpt = prompt("\nCreate a README.md file? (Y/n): ");
+
+if (readmeOpt?.toLowerCase() === "n" || readmeOpt?.toLowerCase() === "no") {
+  Deno.exit();
+}
+
 cmd = new Deno.Command("touch", { args: ["README.md"] });
+cmd.outputSync();
