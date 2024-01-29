@@ -55,7 +55,12 @@ const denoConfig = `{
   "lint": {
     "include": ["src/"],
     "rules": {
-    "include": ["no-await-in-sync-fn", "no-class-assign"]
+      "include": [
+        "no-await-in-sync-fn",
+        "no-class-assign",
+        "no-empty",
+        "require-await"
+      ]
     }
   },
   "fmt": {
@@ -68,6 +73,7 @@ const denoConfig = `{
     "strict": true,
     "noUnusedLocals": true,
     "strictNullChecks": true,
+    "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true
