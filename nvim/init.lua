@@ -1,0 +1,1 @@
+require("gomen.config")
