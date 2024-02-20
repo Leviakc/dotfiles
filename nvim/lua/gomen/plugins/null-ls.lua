@@ -24,7 +24,7 @@ return {
 			null_ls.builtins.formatting.stylua,
 			null_ls.builtins.formatting.prettierd,
 			null_ls.builtins.formatting.prettier.with({
-				filetypes = { "html", "json", "yaml", "markdown", "lua", "astro" },
+				filetypes = { "html", "json", "yaml", "markdown", "lua" },
 			}),
 			-- null_ls.builtins.diagnostics.eslint,
 			null_ls.builtins.completion.spell,
