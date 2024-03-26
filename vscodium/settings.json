@@ -1,0 +1,135 @@
+{
+  "workbench.colorTheme": "Catppuccin Macchiato",
+  "workbench.iconTheme": "material-icon-theme",
+  "json.schemas": [
+    {
+      "fileMatch": ["/zapp.json"],
+      "url": "file:///home/gomen/.vscode-oss/extensions/ibm.zopeneditor-3.3.3-universal/resources/zapp-schema-1.0.0.json"
+    },
+    {
+      "fileMatch": ["/zcodeformat.json"],
+      "url": "file:///home/gomen/.vscode-oss/extensions/ibm.zopeneditor-3.3.3-universal/resources/zcodeformat-schema-0.0.1.json"
+    }
+  ],
+  "files.associations": {
+    "*.COBOL*": "cobol",
+    "*.COB*": "cobol",
+    "*.COBCOPY*": "cobol",
+    "*.COPYBOOK*": "cobol",
+    "*.COPY*": "cobol",
+    "*.PL1*": "pl1",
+    "*.PLI*": "pl1",
+    "*.INC*": "pl1",
+    "*.INCLUDE*": "pl1",
+    "*.JCL*": "jcl",
+    "*.ASM*": "hlasm",
+    "*.ASSEMBLE*": "hlasm",
+    "*.HLASM*": "hlasm",
+    "*.HLA*": "hlasm",
+    "*.MACLIB*": "hlasm",
+    "*.EXEC*": "rexx",
+    "*.REXX*": "rexx",
+    "*.REXXINC*": "rexx",
+    "*.rex": "rexx",
+    "*.rexx": "rexx",
+    "*.copyasm": "hlasm",
+    "*.macasm": "hlasm",
+    "*.bms": "hlasm"
+  },
+  "editor.lineNumbers": "relative",
+  "editor.fontSize": 16,
+  "editor.cursorSurroundingLines": 8,
+  "vim.useSystemClipboard": true,
+  // "editor.scrollOf"
+  "vim.leader": "space",
+  "vim.normalModeKeyBindingsNonRecursive": [{}],
+  "vim.normalModeKeyBindings": [
+    {
+      "before": ["<leader>", "d", "u"],
+      "commands": ["editor.action.copyLinesDownAction"]
+    },
+    {
+      "before": ["<leader>", "q"],
+      "commands": [":q"]
+    },
+    {
+      "before": ["<leader>", "w"],
+      "commands": [":w"]
+    },
+    {
+      "before": ["<leader>", "a", "s"],
+      "commands": [":q!"]
+    },
+    {
+      "before": ["<leader>", "e"],
+      "commands": [":wq"]
+    },
+    {
+      "before": ["<leader>", "d"],
+      "commands": [":t.<CR>"]
+    },
+    {
+      "before": ["<leader>", "m", "p"],
+      "commands": ["markdown.showPreviewToSide"]
+    },
+    {
+      "before": ["<leader>", "c", "a"],
+      "commands": [":tabo"]
+    },
+    {
+      "before": ["<S-l>"],
+      "commands": [":bnext"]
+    },
+    {
+      "before": ["<S-h>"],
+      "commands": [":bprevious"]
+    },
+    {
+      "before": ["<leader>", "f", "f"],
+      "commands": ["workbench.action.quickOpen"],
+      "silent": true
+    },
+    {
+      "before": ["K"],
+      "commands": ["editor.action.showHover"],
+      "silent": true
+    },
+    {
+      "before": ["<C-space>"],
+      "commands": ["editor.action.triggerSuggest"],
+      "silent": true
+    },
+    {
+      "before": ["<leader>", "r", "n"],
+      "commands": ["editor.action.rename"],
+      "silent": true
+    },
+    {
+      "before": ["<C-h>"],
+      "commands": ["workbench.action.navigateLeft"]
+    },
+    {
+      "before": ["<C-l>"],
+      "commands": ["workbench.action.navigateRight"]
+    }
+  ],
+  "vim.insertModeKeyBindingsNonRecursive": [],
+  "vim.visualModeKeyBindings": [
+    {
+      // "before": [
+      //     "<C-p>",
+      // ],
+      // "commands": [
+      //     "editor.action.quickOpen"
+      // ]
+    }
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "prettier.documentSelectors": ["**/*.astro"],
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.wordWrap": "on",
+  "editor.wordWrapColumn": 70
+}
