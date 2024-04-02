@@ -85,7 +85,7 @@ Deno.writeTextFileSync("deno.json", denoConfig);
 // Readme file created
 const readmeOpt = prompt("\nCreate a README.md file? (Y/n): ");
 
-if (readmeOpt?.toLowerCase() === "n" || readmeOpt?.toLowerCase() === "no") {
+if (readmeOpt?.toLowerCase() === "n" || readmeOpt?.toLowerCase() === "no" || readmeOpt?.toLowerCase() === "N") {
   Deno.exit();
 }
 

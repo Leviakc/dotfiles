@@ -1,10 +1,17 @@
 #!/usr/bin/env lua
 local function tsConfigGen()
-	os.execute("pnpm add -D typescript")
+	os.execute("pnpm add -D typescript @types/node")
 	local file = io.open("tsconfig.json", "w")
 	if file then
 		file:write([[
 {
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "include": [
+    "src"
+  ],
   "compilerOptions": {
     "target": "ES2022", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "module": "NodeNext", /* Specify what module code is generated. */
@@ -32,6 +39,8 @@ local function tsConfigGen()
 	else
 		print("Error: Could not create tsconfig.json file")
 	end
+	os.execute("mkdir src")
+	os.execute("touch src/app.ts")
 end
 
 local function packageElection(package, flag)
@@ -44,12 +53,47 @@ local function gitInitilization()
 		print("Git already initialized")
 	else
 		os.execute("git init")
+		os.execute("touch .gitignore")
 	end
+end
+
+local function packageJsonScripts()
+	local package = io.open("package.json", "r"):read("a")
+
+	package = (
+		package:gsub(
+			[[
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+      ]],
+			[[
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc -w",
+    "dev:watch": "node --watch ./dist/app.js",
+    "build": "rm -rf ./dist && tsc"
+  },
+      ]]
+		)
+	)
+
+	local file = io.open("package.json", "w")
+
+	if not file then
+		print("Error: Could not open package.json file")
+		os.exit()
+	end
+
+	file:write(package)
+	file:close()
 end
 
 if arg[1] == "-y" then
 	os.execute("pnpm init")
-	os.execute("git init")
+	gitInitilization()
+	os.execute("touch README.md")
+	packageJsonScripts()
 	tsConfigGen()
 	os.exit()
 end
@@ -80,22 +124,34 @@ elseif choice == "yarn" then
 	packageElection(choice, "-y")
 else
 	print("No valid package manager selected. project initialized with pnpm")
-	os.execute("sleep " .. tonumber(1))
+	os.execute("sleep " .. 1)
 	packageElection("pnpm")
 end
 
+packageJsonScripts()
+
 io.write("Do you want to initialize git? [Y/n]: ")
 local gitChoice = io.read()
-if gitChoice == "Y" or gitChoice == "y" then
-	gitInitilization()
-else
+if gitChoice == "N" or gitChoice == "n" then
 	print("Git not initialized")
+else
+	gitInitilization()
 end
 
 io.write("Do you want to initialize typescript? [Y/n]: ")
 local tsChoice = io.read()
-if tsChoice == "Y" or tsChoice == "y" then
-	tsConfigGen()
-else
+
+if tsChoice == "N" or tsChoice == "n" then
 	print("Typescript not initialized")
+else
+	tsConfigGen()
+end
+
+io.write("Do you want to create a README.md? [Y/n]: ")
+local readmeChoice = io.read()
+
+if readmeChoice == "N" or readmeChoice == "n" then
+	print("README not created")
+else
+	os.execute("touch README.md")
 end
