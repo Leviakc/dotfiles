@@ -1,1 +1,2 @@
-require("gomen.config")
+require("config")
+require("core.statusline")
