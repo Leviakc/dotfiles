@@ -1,51 +1,5 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write --allow-run
 
-// Start git repo if not already started
-
-let cmd = new Deno.Command("git", { args: ["rev-parse", "--git-dir"] });
-const { stdout } = await cmd.output();
-const gitDir = new TextDecoder().decode(stdout);
-
-if (!gitDir) {
-  const gitCmd = new Deno.Command("git", { args: ["init"] });
-  const { stdout } = await gitCmd.output();
-  await Deno.stdout.write(stdout);
-  // Creates .gitignore file
-  new Deno.Command("touch", { args: [".gitignore"] });
-} else {
-  console.log("Git repo already exists");
-}
-
-// Start deno project if not already started
-
-const files = [];
-for await (const dirEntry of Deno.readDir("./")) {
-  if (/deno\./.test(dirEntry.name)) files.push(dirEntry.name);
-}
-
-if (files.length > 0) {
-  console.log("Deno files already exist");
-  Deno.exit();
-}
-
-console.log("\n");
-cmd = new Deno.Command("deno", { args: ["init"] });
-const { stdout: denoOutput, stderr } = await cmd.output();
-
-denoOutput.length > 0
-  ? await Deno.stdout.write(denoOutput)
-  : await Deno.stdout.write(stderr);
-
-// Second way to run deno init
-// const command = new Deno.Command(Deno.execPath(), {
-//   args: ["init"],
-//   stdin: "piped",
-//   stdout: "piped",
-// });
-// const child = command.spawn();
-// child.stdout.pipeTo(await Deno.stdout.writable);
-// child.stdin.close();
-
 const denoConfig = `{
   "imports": {
   },
@@ -80,7 +34,67 @@ const denoConfig = `{
   }
 }`;
 
+const gitiginoreConfig = `
+  .env\n
+  http\n
+  /.vs/\n
+/.vscode/\n
+`;
+
+
+
+// Start git repo if not already started
+let cmd = new Deno.Command("git", { args: ["rev-parse", "--git-dir"] });
+const { stdout } = await cmd.output();
+const gitDir = new TextDecoder().decode(stdout);
+
+if (!gitDir) {
+  const gitCmd = new Deno.Command("git", { args: ["init"] });
+  const { stdout } = await gitCmd.output();
+  await Deno.stdout.write(stdout);
+  // Creates .gitignore file
+  const gitignore = new Deno.Command("touch", { args: [".gitignore"] });
+  gitignore.outputSync();
+} else {
+  console.log("Git repo already exists");
+}
+
+// Start deno project if not already started
+
+const files = [];
+for await (const dirEntry of Deno.readDir("./")) {
+  if (/deno\./.test(dirEntry.name)) files.push(dirEntry.name);
+}
+
+if (files.length > 0) {
+  console.log("Deno files already exist");
+  Deno.exit();
+}
+
+console.log("\n");
+cmd = new Deno.Command("deno", { args: ["init"] });
+const { stdout: denoOutput, stderr } = await cmd.output();
+
+denoOutput.length > 0
+  ? await Deno.stdout.write(denoOutput)
+  : await Deno.stdout.write(stderr);
+
+// Second way to run deno init
+// const command = new Deno.Command(Deno.execPath(), {
+//   args: ["init"],
+//   stdin: "piped",
+//   stdout: "piped",
+// });
+// const child = command.spawn();
+// child.stdout.pipeTo(await Deno.stdout.writable);
+// child.stdin.close();
+
 Deno.writeTextFileSync("deno.json", denoConfig);
+new Deno.Command("mkdir", { args: ["src"] }).outputSync();
+new Deno.Command("mkdir", { args: ["test"] }).outputSync();
+new Deno.Command("mv", { args: ["main.ts", "src/"] }).outputSync();
+new Deno.Command("mv", { args: ["main_test.ts", "test/"] }).outputSync();
+
 
 // Readme file created
 const readmeOpt = prompt("\nCreate a README.md file? (Y/n): ");

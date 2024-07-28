@@ -93,8 +93,8 @@ if arg[1] == "-y" then
 	os.execute("pnpm init")
 	gitInitilization()
 	os.execute("touch README.md")
-	packageJsonScripts()
 	tsConfigGen()
+	packageJsonScripts()
 	os.exit()
 end
 
@@ -128,8 +128,6 @@ else
 	packageElection("pnpm")
 end
 
-packageJsonScripts()
-
 io.write("Do you want to initialize git? [Y/n]: ")
 local gitChoice = io.read()
 if gitChoice == "N" or gitChoice == "n" then
@@ -145,6 +143,7 @@ if tsChoice == "N" or tsChoice == "n" then
 	print("Typescript not initialized")
 else
 	tsConfigGen()
+	packageJsonScripts()
 end
 
 io.write("Do you want to create a README.md? [Y/n]: ")
